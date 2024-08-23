@@ -1,7 +1,7 @@
-import { Slug } from "./value-objects/slug"
-import { Entity } from "@/core/entities/entity"
-import { UniqueEntityID } from "./value-objects/unique-entity-id"
-import { Optional } from "@/core/types/optional"
+import { Slug } from './value-objects/slug'
+import { Entity } from '@/core/entities/entity'
+import { UniqueEntityID } from './value-objects/unique-entity-id'
+import { Optional } from '@/core/types/optional'
 import dayjs from 'dayjs'
 
 interface QuestionProps {
@@ -15,12 +15,18 @@ interface QuestionProps {
 }
 
 export class Question extends Entity<QuestionProps> {
-  static create(props: Optional<QuestionProps, 'createdAt' | 'slug'>, id?: UniqueEntityID) {
-    const question = new Question({
-      ...props,
-      slug: props.slug ?? Slug.createFromText(props.title),
-      createdAt: new Date()
-    }, id)
+  static create(
+    props: Optional<QuestionProps, 'createdAt' | 'slug'>,
+    id?: UniqueEntityID,
+  ) {
+    const question = new Question(
+      {
+        ...props,
+        slug: props.slug ?? Slug.createFromText(props.title),
+        createdAt: new Date(),
+      },
+      id,
+    )
 
     return question
   }
@@ -28,27 +34,27 @@ export class Question extends Entity<QuestionProps> {
   get authorId() {
     return this.props.authorId
   }
-  
+
   get bestAnswerId() {
     return this.props.bestAnswerId
   }
-  
+
   get title() {
     return this.props.title
   }
-  
+
   get content() {
     return this.props.content
   }
-  
+
   get slug() {
     return this.props.slug
   }
-  
+
   get createdAt() {
     return this.props.createdAt
   }
-  
+
   get updatedAt() {
     return this.props.updatedAt
   }
@@ -58,10 +64,7 @@ export class Question extends Entity<QuestionProps> {
   }
 
   get excerpt() {
-    return this.content
-      .substring(0, 120)
-      .trimEnd()
-      .concat('...')
+    return this.content.substring(0, 120).trimEnd().concat('...')
   }
 
   private touch() {
@@ -78,7 +81,7 @@ export class Question extends Entity<QuestionProps> {
     this.props.content = content
     this.touch()
   }
-  
+
   set bestAnswerId(bestAnswerId: UniqueEntityID | undefined) {
     this.props.bestAnswerId = bestAnswerId
     this.touch()

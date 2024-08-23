@@ -1,6 +1,6 @@
-import { Answer } from "../entities/answer"
-import { UniqueEntityID } from "../entities/value-objects/unique-entity-id"
-import { AnswersRepository } from "../repositories/answers-repository"
+import { Answer } from '../entities/answer'
+import { UniqueEntityID } from '../entities/value-objects/unique-entity-id'
+import { AnswersRepository } from '../repositories/answers-repository'
 
 interface AnswerQuestionUseCaseInput {
   instructorId: string
@@ -11,7 +11,11 @@ interface AnswerQuestionUseCaseInput {
 export class AnswerQuestionUseCase {
   constructor(private readonly answersRepository: AnswersRepository) {}
 
-  async execute({instructorId, questionId, content}: AnswerQuestionUseCaseInput) {
+  async execute({
+    instructorId,
+    questionId,
+    content,
+  }: AnswerQuestionUseCaseInput) {
     const answer = Answer.create({
       content,
       authorId: new UniqueEntityID(instructorId),
