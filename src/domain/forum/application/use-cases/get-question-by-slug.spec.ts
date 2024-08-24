@@ -30,7 +30,7 @@ describe('Get Question By Slug Use Case', () => {
     expect(question.content).toBe(newQuestion.content)
   })
 
-  it('should be able to get a question with wrong slug', async () => {
+  it('should not be able to get a question with wrong slug', async () => {
     await expect(
       sut.execute({
         slug: 'wrong-slug',
