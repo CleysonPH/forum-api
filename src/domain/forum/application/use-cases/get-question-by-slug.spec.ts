@@ -1,8 +1,7 @@
 import { InMemoryQuestionsRepository } from 'test/repositories/in-memory-questions-repository'
 import { GetQuestionBySlugUseCase } from './get-question-by-slug'
-import { Question } from '../../enterprise/entities/question'
+import { makeQuestion } from 'test/factories/makeQuestion'
 import { Slug } from '../../enterprise/entities/value-objects/slug'
-import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 
 let inMemoryQuestionsRepository: InMemoryQuestionsRepository
 let sut: GetQuestionBySlugUseCase
@@ -14,11 +13,8 @@ describe('Get Question By Slug Use Case', () => {
   })
 
   it('should be able to get a question', async () => {
-    const newQuestion = Question.create({
-      title: 'Example question',
+    const newQuestion = makeQuestion({
       slug: Slug.create('example-question'),
-      authorId: new UniqueEntityID('1'),
-      content: 'Example content',
     })
 
     await inMemoryQuestionsRepository.create(newQuestion)
@@ -37,7 +33,7 @@ describe('Get Question By Slug Use Case', () => {
   it('should be able to get a question with wrong slug', async () => {
     await expect(
       sut.execute({
-        slug: 'example-question',
+        slug: 'wrong-slug',
       }),
     ).rejects.toBeInstanceOf(Error)
   })
