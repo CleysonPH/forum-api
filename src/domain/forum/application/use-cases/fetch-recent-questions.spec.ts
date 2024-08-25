@@ -37,7 +37,7 @@ describe('Fetch Recent Questions', () => {
       await inMemoryQuestionsRepository.create(makeQuestion())
     }
 
-    const { questions } = await sut.execute({ page: 1 })
+    const { questions } = await sut.execute({ page: 2 })
 
     expect(questions).toHaveLength(2)
   })
